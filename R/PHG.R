@@ -22,7 +22,7 @@ setMethod(
   }
 )
 
-PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "ASE1", 
+PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal", 
                 alternative="one.sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
@@ -41,12 +41,13 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "ASE1",
     ASE <- 0
   }
   conf <- qt(1-conf.level/2, N-1)
-  ci_G <- c(G_val-2*ASE*conf/sqrt(N), G_val+2*ASE*conf/sqrt(N))
-  ci_PHG <- c(PHG_val-ASE*conf/sqrt(N), PHG_val+ASE*conf/sqrt(N))
-  t_val <- (PHG_val-0.5)/ASE
+  ci_G <- c(G_val-2*ASE1*conf/sqrt(N), G_val+2*ASE1*conf/sqrt(N))
+  ci_PHG <- c(PHG_val-ASE1*conf/sqrt(N), PHG_val+ASE1*conf/sqrt(N))
+  t_val <- (PHG_val-0.5)/ASE0
   p_val <- ifelse(alternative=="one.sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
   PHG_obj <- new("PHG", statistics=list("G"=G_val, "PHG"=PHG_val), 
-                 significance=list("ASE_G"=ASE*2, "ASE_PHG"=ASE, "ci_G"=ci_G, 
+                 significance=list("ASE1_G"=ASE1*2, "ASE0_D" = ASE0*2,
+                                   "ASE1_PHG"=ASE1, "ASE0_PHG"=ASE0 "ci_G"=ci_G, 
                                    "ci_PHG"=ci_PHG, "t_stat"=t_val,
                                    "p_value"=p_val), 
                  call = list("conf.level"=conf.level, "error.type"=error.type,

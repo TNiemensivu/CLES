@@ -71,9 +71,9 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
     ASE0  <- 0
   }
   conf <- qt(1-conf.level/2, N-1)
-  ci_D <- c(D_val-(2*ASE/sqrt(N))*conf, D_val+(2*ASE/sqrt(N))*conf)
-  ci_PHD <- c(PHD_val-ASE*conf/sqrt(N), PHD_val+ASE*conf/sqrt(N))
-  t_val <- (PHD_val-0.5)/ASE
+  ci_D <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
+  ci_PHD <- c(PHD_val-ASE1*conf/sqrt(N), PHD_val+ASE1*conf/sqrt(N))
+  t_val <- (PHD_val-0.5)/ASE0
   p_val <- ifelse(alternative=="one.sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
   PHD_obj <- new("PHD", statistics=list("D"=D_val, "PHD"=PHD_val), 
                  significance=list("ASE1_D"=ASE1*2, "ASE1_PHD"=ASE1, 
