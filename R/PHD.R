@@ -42,12 +42,12 @@ setMethod(
     PHD_confint <- paste(round(signif$ci_PHD[1], digits=3)
                          , round(signif$ci_PHD[2], digits=3), sep=" - ")
     ci_label <- paste("CI ", (1-object@call$conf.level)*100, "%", sep="")
-    cat(sprintf("%-5s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.", "ASE", ci_label,
-                "t-stat.", "p-value"))
-    cat(sprintf("%-5s %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "D", stats$D, 
-                signif$ASE_D, D_confint, signif$t_stat, signif$p_val))
-    cat(sprintf("%-5s %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "PHD", stats$PHD, 
-                signif$ASE_PHD, PHD_confint, signif$t_stat, signif$p_val))
+    cat(sprintf("%-5s %-6s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.", "ASE1", "ASE0"
+                ci_label, "t-stat.", "p-value"))
+    cat(sprintf("%-5s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "D", stats$D, 
+                signif$ASE1_D, signif$ASE0_D, D_confint, signif$t_stat, signif$p_val))
+    cat(sprintf("%-5s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "PHD", stats$PHD, 
+                signif$ASE1_PHD, signif$ASE0_PHD PHD_confint, signif$t_stat, signif$p_val))
     invisible(list(statistics = stats, significance = signif))
   }
 )
@@ -83,3 +83,4 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                  call = list("conf.level"=conf.level, "error.type"=error.type,
                              "alternative"=alternative))
 }
+
