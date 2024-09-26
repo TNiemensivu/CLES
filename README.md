@@ -1,6 +1,8 @@
-#CLEF - R package for common language effect sizes
+# CLEF - R package for common language effect sizes
 
-##This package can be installed using the devtools package using the commands below.
+## Installation
+
+This package can be installed using the devtools package using the commands below.
 
 library(devtools)
 
