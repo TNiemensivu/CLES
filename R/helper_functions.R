@@ -43,7 +43,6 @@ D_ij <- function(table){
   }
   return(D)
 }
-table <- table(data_D$g1, data_D$X)
 
 P <- function(table){
   C <- C_ij(table)
@@ -78,7 +77,6 @@ D_ASE1 <- function(table){
   n_sums <- rowSums(table)
   return((2/D_val^2)*sqrt(sum(table*(D_val*(C_mat-D_mat)-(P_val-Q_val)*(N-n_sums))^2)))
 }
-D_ASE1(crosstab_D)
 
 D_ASE0 <- function(table){
   N <- sum(table)
@@ -90,7 +88,6 @@ D_ASE0 <- function(table){
   n_sums <- rowSums(table)
   return(2/D_val *sqrt(sum(table*(C_mat-D_mat)^2) - 1/N*(P_val-Q_val)^2))
 }
-D_ASE0(table)
 
 D_ASE0_unif <- function(table){
   n <- nrow(table)
@@ -98,7 +95,6 @@ D_ASE0_unif <- function(table){
   N <- sum(table)
   return(sqrt((4*(m^2-1)*(n+1))/(9*N*m^2*(n-1))))
 }
-D_ASE0_unif(table)
 
 G_ASE1 <- function(table){
   N <- sum(table)

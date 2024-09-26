@@ -1,3 +1,34 @@
+#' Function to calculate PHD effect size
+#'
+#'
+#' @aliases PHD
+#' @param x either a table or a vector of a same length as y
+#'
+#' @param y if x is supplied as a vector, a vector same length as x
+#' 
+#' @param error.type type of asymptotic standard error to be used in calculation
+#' of the p-value. Default is "normal" with other option being "uniform" for 
+#' the uniform distribution based standard error and hypothesis testing
+#' 
+#' @param conf.level confidence level used for confidence interval, default is 0.05
+#'
+#' @author Timi Niemensivu \email{timinie@@utu.fi}
+#' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
+#' 
+#' @keywords common language effect sizes
+#' @export PHD
+#' @seealso \code{\link{PHG}}
+#' @examples
+#'
+#' \dontrun{
+#'
+#' dat <- expand.table(g_data)
+#' PHD_res <- PHD(dat$g1, dat$X)
+#' summary(PHD)
+#' }
+
+
+
 setClass("PHD", representation(statistics = "list", significance = "list", call="list"))
 
 setMethod(
@@ -21,7 +52,7 @@ setMethod(
   }
 )
 
-PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "ASE1", 
+PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal", 
                 alternative="one.sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
