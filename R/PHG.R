@@ -1,3 +1,33 @@
+#' Function to calculate PHG effect size
+#'
+#'
+#' @aliases PHG
+#' @param x either a table or a vector of a same length as y
+#'
+#' @param y if x is supplied as a vector, a vector same length as x
+#' 
+#' @param error.type type of asymptotic standard error to be used in calculation
+#' of the p-value. Default is "normal" with other option being "uniform" for 
+#' the uniform distribution based standard error and hypothesis testing
+#' 
+#' @param conf.level confidence level used for confidence interval, default is 0.05
+#'
+#' @author Timi Niemensivu \email{timinie@@utu.fi}
+#' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
+#' 
+#' @keywords common language effect sizes
+#' @export PHG
+#' @seealso \code{\link{PHG}}
+#' @examples
+#'
+#' \dontrun{
+#'
+#' dat <- expand.table(g_data)
+#' PHG_res <- PHG(dat$g1, dat$X)
+#' summary(PHG)
+#' }
+
+
 
 setClass("PHG", representation(statistics = "list", significance = "list", call="list"))
 
@@ -47,7 +77,7 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   p_val <- ifelse(alternative=="one.sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
   PHG_obj <- new("PHG", statistics=list("G"=G_val, "PHG"=PHG_val), 
                  significance=list("ASE1_G"=ASE1*2, "ASE0_D" = ASE0*2,
-                                   "ASE1_PHG"=ASE1, "ASE0_PHG"=ASE0 "ci_G"=ci_G, 
+                                   "ASE1_PHG"=ASE1, "ASE0_PHG"=ASE0, "ci_G"=ci_G, 
                                    "ci_PHG"=ci_PHG, "t_stat"=t_val,
                                    "p_value"=p_val), 
                  call = list("conf.level"=conf.level, "error.type"=error.type,
