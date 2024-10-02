@@ -5,19 +5,19 @@
 #' @param x either a table or a vector of a same length as y
 #'
 #' @param y if x is supplied as a vector, a vector same length as x
-#' 
+#'
 #' @param error.type type of asymptotic standard error to be used in calculation
-#' of the p-value. Default is "normal" with other option being "uniform" for 
+#' of the p-value. Default is "normal" with other option being "uniform" for
 #' the uniform distribution based standard error and hypothesis testing
-#' 
+#'
 #' @param conf.level confidence level used for confidence interval, default is 0.05
 #'
 #' @author Timi Niemensivu \email{timinie@@utu.fi}
 #' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
-#' 
+#'
 #' @keywords common language effect sizes
 #' @export PHG
-#' @seealso \code{\link{PHG}}
+#' @seealso \code{\link{PHD}}
 #' @examples
 #'
 #' \dontrun{
@@ -28,36 +28,12 @@
 #' }
 
 
-
-setClass("PHG", representation(statistics = "list", significance = "list", call="list"))
-
-setMethod(
-  "summary",
-  "PHG",  
-  function(object) {
-    stats <- object@statistics
-    signif <- object@significance
-    G_confint <- paste(round(signif$ci_G[1], digits=3)
-                       , round(signif$ci_G[2], digits=3), sep=" - ")
-    PHG_confint <- paste(round(signif$ci_PHG[1], digits=3)
-                         , round(signif$ci_PHG[2], digits=3), sep=" - ")
-    ci_label <- paste("CI ", (1-object@call$conf.level)*100, "%", sep="")
-    cat(sprintf("%-5s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.", "ASE", ci_label,
-                "t-stat.", "p-value"))
-    cat(sprintf("%-5s %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "G", stats$G, 
-                signif$ASE_G, G_confint, signif$t_stat, signif$p_val))
-    cat(sprintf("%-5s %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "PHG", stats$PHG, 
-                signif$ASE_PHG, PHG_confint, signif$t_stat, signif$p_val))
-    invisible(list(statistics = stats, significance = signif))
-  }
-)
-
-PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal", 
+PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                 alternative="one.sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
   N <- sum(tab)
-  G_val <- G(tab) 
+  G_val <- G(tab)
   PHG_val <- 0.5+0.5*G_val
   ASE1 <- 0.5*G_ASE1(tab)
   if(error.type == "normal"|error.type == "Normal"|error.type == "n"|error.type == "N"){
@@ -75,13 +51,14 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   ci_PHG <- c(PHG_val-ASE1*conf/sqrt(N), PHG_val+ASE1*conf/sqrt(N))
   t_val <- (PHG_val-0.5)/ASE0
   p_val <- ifelse(alternative=="one.sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
-  PHG_obj <- new("PHG", statistics=list("G"=G_val, "PHG"=PHG_val), 
+  PHG_obj <- new("PHG", statistics=list("G"=G_val, "PHG"=PHG_val),
                  significance=list("ASE1_G"=ASE1*2, "ASE0_D" = ASE0*2,
-                                   "ASE1_PHG"=ASE1, "ASE0_PHG"=ASE0, "ci_G"=ci_G, 
+                                   "ASE1_PHG"=ASE1, "ASE0_PHG"=ASE0, "ci_G"=ci_G,
                                    "ci_PHG"=ci_PHG, "t_stat"=t_val,
-                                   "p_value"=p_val), 
+                                   "p_value"=p_val),
                  call = list("conf.level"=conf.level, "error.type"=error.type,
                              "alternative"=alternative))
+  return(PHG_obj)
 }
 
 

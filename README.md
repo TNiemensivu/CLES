@@ -1,4 +1,4 @@
-# CLEF - R package for common language effect sizes
+# CLEF - R package for Common Language EFfect sizes
 
 R package for common language effect sizes
 
