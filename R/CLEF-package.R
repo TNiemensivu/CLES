@@ -7,7 +7,6 @@
 #' @title Common Language Effect Size
 #' @author Timi Niemensivu \email{timinie@@utu.fi}
 #' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
-#' @useDynLib CLEF
 #' @keywords package
 
 NULL
