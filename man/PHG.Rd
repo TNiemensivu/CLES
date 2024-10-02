@@ -9,7 +9,7 @@ PHG(
   y = NULL,
   conf.level = 0.05,
   error.type = "normal",
-  alternative = "one.sided"
+  alternative = "two.sided"
 )
 }
 \arguments{

@@ -10,7 +10,7 @@
 #' @useDynLib CLEF
 #' @keywords package
 
-
+NULL
 
 
 
@@ -31,3 +31,5 @@
 #' @keywords data
 #' @examples
 #'
+
+NULL

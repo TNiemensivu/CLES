@@ -2,3 +2,6 @@
 
 export(PHD)
 export(PHG)
+exportClasses(PHD)
+exportClasses(PHG)
+useDynLib(CLEF)

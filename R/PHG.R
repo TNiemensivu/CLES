@@ -29,7 +29,7 @@
 
 
 PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
-                alternative="one.sided"){
+                alternative="two.sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
   N <- sum(tab)
