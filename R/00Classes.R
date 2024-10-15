@@ -40,7 +40,7 @@ setMethod(
     PHD_confint <- paste(round(signif$ci_PHD[1], digits=3)
                          , round(signif$ci_PHD[2], digits=3), sep=" - ")
     ci_label <- paste("CI ", (1-call$conf.level)*100, "%(",
-                      call$significance, ")", sep="")
+                      call$alternative, ")", sep="")
     cat(sprintf("%-5s %-6s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.", "ASE1",
                 "ASE0", ci_label, "Z-stat.", "p-value"))
     cat(sprintf("%-5s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "D", stats$D,
@@ -93,7 +93,7 @@ setMethod(
     PHG_confint <- paste(round(signif$ci_PHG[1], digits=3)
                          , round(signif$ci_PHG[2], digits=3), sep=" - ")
     ci_label <- paste("CI ", (1-object@call$conf.level)*100, "% (",
-                      call$significance, ")", sep="")
+                      call$alternative, ")", sep="")
     cat(sprintf("%-5s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.", "ASE", ci_label,
                 "Z-stat.", "p-value"))
     cat(sprintf("%-5s %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", "G", stats$G,
