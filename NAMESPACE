@@ -2,6 +2,8 @@
 
 export(PHD)
 export(PHG)
-exportClasses(PHD)
-exportClasses(PHG)
+export(cliffs_d)
+export(ordinal_A)
+export(summarise_cles)
+exportClasses(cles)
 exportMethods(summary)
