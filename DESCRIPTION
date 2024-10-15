@@ -1,5 +1,5 @@
-Package: CLEF
-Title:  R package for common language effect sizes
+Package: CLES
+Title:  R package for Common Language Effect Sizes
 Version: 0.0.0.9000
 Authors@R: c( 
     person("Timi", "Niemensivu", email = "timinie@utu.fi", role = c("aut", "cre")),
