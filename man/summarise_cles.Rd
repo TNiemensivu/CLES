@@ -39,7 +39,7 @@ summarise_cles(PHD_data$g1, PHD_data$X)
 
 }
 \seealso{
-\code{\link{PHD}} \code{\link{PHG}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
+\code{\link{PHD}} \code{\link{PHG}} \code{\link{ordinal_d}} \code{\link{ordinal_A}}
 }
 \author{
 Timi Niemensivu \email{timinie@utu.fi}

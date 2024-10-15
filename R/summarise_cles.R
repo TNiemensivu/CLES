@@ -20,7 +20,7 @@
 #'
 #' @keywords common language effect sizes
 #' @export summarise_cles
-#' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
+#' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{ordinal_d}} \code{\link{ordinal_A}}
 #' @examples
 #'
 #' \dontrun{
@@ -34,7 +34,7 @@ summarise_cles <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                            alternative="2-sided"){
   PHD_val <- PHD(x,y,conf.level, error.type, alternative)
   PHG_val <- PHG(x,y,conf.level, error.type, alternative)
-  cliffs_d_val <- cliffs_d(x,y,conf.level, error.type, alternative)
+  ordinal_d_val <- ordinal_d(x,y,conf.level, error.type, alternative)
   ordinal_A_val <- ordinal_A(x,y,conf.level, error.type, alternative)
 
   ci_label <- paste("CI ", (1-conf.level)*100, "%", sep="")
@@ -63,15 +63,18 @@ summarise_cles <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
               paste(round(PHG_val@significance$ci_cles[1], digits=3),
                     round(PHG_val@significance$ci_cles[2], digits=3), sep=" - ")))
 
-  cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s \n", cliffs_d_val@call$cles,
-              cliffs_d_val@statistics$cles, cliffs_d_val@significance$ASE1_cles, cliffs_d_val@significance$ASE0_cles,
-              paste(round(cliffs_d_val@significance$ci_cles[1], digits=3),
-                    round(cliffs_d_val@significance$ci_cles[2], digits=3), sep=" - ")))
+  cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s \n", ordinal_d_val@call$cles,
+              ordinal_d_val@statistics$cles, ordinal_d_val@significance$ASE1_cles, ordinal_d_val@significance$ASE0_cles,
+              paste(round(ordinal_d_val@significance$ci_cles[1], digits=3),
+                    round(ordinal_d_val@significance$ci_cles[2], digits=3), sep=" - ")))
 
   cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s \n", ordinal_A_val@call$cles,
               ordinal_A_val@statistics$cles, ordinal_A_val@significance$ASE1_cles, ordinal_A_val@significance$ASE0_cles,
               paste(round(ordinal_A_val@significance$ci_cles[1], digits=3),
                     round(ordinal_A_val@significance$ci_cles[2], digits=3), sep=" - ")))
+
+  cat("Z-statistic: ", PHD_val@significance$Z_stat, ", p-value(",
+      PHD_val@call$alternative, "): ", PHD_val@significance$p_value, sep="")
 }
 
 

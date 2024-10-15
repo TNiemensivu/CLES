@@ -1,7 +1,7 @@
-#' Function to calculate Cliff's d effect size
+#' Function to calculate Cliff's d effect size for ordinal data
 #'
 #'
-#' @aliases cliffs_d
+#' @aliases ordinal_d
 #' @param x either a table or a vector of a same length as y
 #'
 #' @param y if x is supplied as a vector, a vector same length as x
@@ -19,20 +19,20 @@
 #' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
 #'
 #' @keywords common language effect sizes
-#' @export cliffs_d
+#' @export ordinal_d
 #' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{ordinal_A}}
 #' @examples
 #'
 #' \dontrun{
 #'
 #' data(PHD_data)
-#' cliffs_d_res <- cliffs_d(PHD_data$g1, PHD_data$X)
-#' summary(cliffs_d_res)
+#' ordinal_d_res <- ordinal_d(PHD_data$g1, PHD_data$X)
+#' summary(ordinal_d_res)
 #' }
 
 
 
-cliffs_d <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
+ordinal_d <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                 alternative="2-sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
@@ -51,19 +51,19 @@ cliffs_d <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
     ASE0  <- 0
   }
   conf <- qt(1-conf.level/2, N-1)
-  cliffs_d_val <- 1-2*PHD_val
+  ordinal_d_val <- 1-2*PHD_val
   ci_rc <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
-  ci_cles <- c(cliffs_d_val-ASE1*conf/sqrt(N), cliffs_d_val+ASE1*conf/sqrt(N))
-  t_val <- (PHD_val-0.5)/ASE0
-  p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
-  cliffs_d_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=cliffs_d_val),
+  ci_cles <- c(ordinal_d_val-ASE1*conf/sqrt(N), ordinal_d_val+ASE1*conf/sqrt(N))
+  Z_val <- (PHD_val-0.5)/ASE0
+  p_val <- ifelse(alternative=="1-sided", 1-pnorm(Z_val), 2*(1-pnorm(Z_val)))
+  ordinal_d_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=ordinal_d_val),
                  significance=list("ASE1_rc"=ASE1*2, "ASE1_cles"=ASE1,
                                    "ASE0_rc"=ASE0*2, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
-                                   "ci_cles"=ci_cles, "t_stat"=t_val,
+                                   "ci_cles"=ci_cles, "Z_stat"=Z_val,
                                    "p_value"=p_val),
-                 call = list("rank.cor" = "Somers' D", "cles" = "Cliff's d",
+                 call = list("rank.cor" = "Somers' D", "cles" = "ordinal d",
                               "conf.level" = conf.level, "error.type"=error.type,
                               "alternative"=alternative))
-  return(cliffs_d_obj)
+  return(ordinal_d_obj)
 }
 

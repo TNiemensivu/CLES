@@ -17,7 +17,7 @@
 #'
 #' @keywords common language effect sizes
 #' @export PHG
-#' @seealso \code{\link{PHD}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
+#' @seealso \code{\link{PHD}} \code{\link{ordinal_d}} \code{\link{ordinal_A}}
 #' @examples
 #'
 #' \dontrun{
@@ -49,12 +49,12 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   conf <- qt(1-conf.level/2, N-1)
   ci_rc <- c(G_val-2*ASE1*conf/sqrt(N), G_val+2*ASE1*conf/sqrt(N))
   ci_cles <- c(PHG_val-ASE1*conf/sqrt(N), PHG_val+ASE1*conf/sqrt(N))
-  t_val <- (PHG_val-0.5)/ASE0
-  p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
+  Z_val <- (PHG_val-0.5)/ASE0
+  p_val <- ifelse(alternative=="1-sided", 1-pnorm(Z_val), 2*(1-pnorm(Z_val)))
   PHG_obj <- new("cles", statistics=list("rank.cor"=G_val, "cles"=PHG_val),
                  significance=list("ASE1_rc"=ASE1*2, "ASE0_rc" = ASE0*2,
                                    "ASE1_cles"=ASE1, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
-                                   "ci_cles"=ci_cles, "t_stat"=t_val,
+                                   "ci_cles"=ci_cles, "Z_stat"=Z_val,
                                    "p_value"=p_val),
                  call = list("rank.cor" = "G-K G", "cles" = "PHG",
                              "conf.level"=conf.level, "error.type"=error.type,

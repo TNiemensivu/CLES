@@ -36,7 +36,7 @@ summary(PHG)
 }
 }
 \seealso{
-\code{\link{PHD}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
+\code{\link{PHD}} \code{\link{ordinal_d}} \code{\link{ordinal_A}}
 }
 \author{
 Timi Niemensivu \email{timinie@utu.fi}

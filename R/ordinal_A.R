@@ -26,7 +26,7 @@
 #'
 #' @keywords common language effect sizes
 #' @export ordinal_A
-#' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{cliffs_d}}
+#' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{ordinal_d}}
 #' @examples
 #'
 #' \dontrun{
@@ -60,12 +60,12 @@ ordinal_A <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   ordinal_A_val <- 1-PHD_val
   ci_rc <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
   ci_cles <- c(ordinal_A_val-ASE1*conf/sqrt(N), ordinal_A_val+ASE1*conf/sqrt(N))
-  t_val <- (PHD_val-0.5)/ASE0
-  p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
+  Z_val <- (PHD_val-0.5)/ASE0
+  p_val <- ifelse(alternative=="1-sided", 1-pnorm(Z_val), 2*(1-pnorm(Z_val)))
   ordinal_A_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=ordinal_A_val),
                       significance=list("ASE1_rc"=ASE1*2, "ASE1_cles"=ASE1,
                                         "ASE0_rc"=ASE0*2, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
-                                        "ci_cles"=ci_cles, "t_stat"=t_val,
+                                        "ci_cles"=ci_cles, "Z_stat"=Z_val,
                                         "p_value"=p_val),
                       call = list("rank.cor" = "Somers' D", "cles" = "ordinal A",
                                   "conf.level" = conf.level, "error.type"=error.type,
