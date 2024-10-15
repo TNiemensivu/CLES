@@ -17,19 +17,19 @@
 #'
 #' @keywords common language effect sizes
 #' @export PHG
-#' @seealso \code{\link{PHD}}
+#' @seealso \code{\link{PHD}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
 #' @examples
 #'
 #' \dontrun{
 #'
 #' data(PHD_data)
-#' PHD_res <- PHD(PHD_data$g1, PHD_data$X)
-#' summary(PHD)
+#' PHG_res <- PHG(PHD_data$g1, PHD_data$X)
+#' summary(PHG)
 #' }
 
 
 PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
-                alternative="two.sided"){
+                alternative="2-sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
   N <- sum(tab)
@@ -47,16 +47,17 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
     ASE <- 0
   }
   conf <- qt(1-conf.level/2, N-1)
-  ci_G <- c(G_val-2*ASE1*conf/sqrt(N), G_val+2*ASE1*conf/sqrt(N))
-  ci_PHG <- c(PHG_val-ASE1*conf/sqrt(N), PHG_val+ASE1*conf/sqrt(N))
+  ci_rc <- c(G_val-2*ASE1*conf/sqrt(N), G_val+2*ASE1*conf/sqrt(N))
+  ci_cles <- c(PHG_val-ASE1*conf/sqrt(N), PHG_val+ASE1*conf/sqrt(N))
   t_val <- (PHG_val-0.5)/ASE0
-  p_val <- ifelse(alternative=="one.sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
-  PHG_obj <- new("PHG", statistics=list("G"=G_val, "PHG"=PHG_val),
-                 significance=list("ASE1_G"=ASE1*2, "ASE0_D" = ASE0*2,
-                                   "ASE1_PHG"=ASE1, "ASE0_PHG"=ASE0, "ci_G"=ci_G,
-                                   "ci_PHG"=ci_PHG, "t_stat"=t_val,
+  p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
+  PHG_obj <- new("cles", statistics=list("rank.cor"=G_val, "cles"=PHG_val),
+                 significance=list("ASE1_rc"=ASE1*2, "ASE0_rc" = ASE0*2,
+                                   "ASE1_cles"=ASE1, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
+                                   "ci_cles"=ci_cles, "t_stat"=t_val,
                                    "p_value"=p_val),
-                 call = list("conf.level"=conf.level, "error.type"=error.type,
+                 call = list("rank.cor" = "G-K G", "cles" = "PHG",
+                             "conf.level"=conf.level, "error.type"=error.type,
                              "alternative"=alternative))
   return(PHG_obj)
 }

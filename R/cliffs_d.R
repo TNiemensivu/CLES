@@ -1,7 +1,7 @@
-#' Function to calculate PHD effect size
+#' Function to calculate Cliff's d effect size
 #'
 #'
-#' @aliases PHD
+#' @aliases cliffs_d
 #' @param x either a table or a vector of a same length as y
 #'
 #' @param y if x is supplied as a vector, a vector same length as x
@@ -19,20 +19,20 @@
 #' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
 #'
 #' @keywords common language effect sizes
-#' @export PHD
-#' @seealso \code{\link{PHG}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
+#' @export cliffs_d
+#' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{ordinal_A}}
 #' @examples
 #'
 #' \dontrun{
 #'
 #' data(PHD_data)
-#' PHD_res <- PHD(PHD_data$g1, PHD_data$X)
-#' summary(PHD)
+#' cliffs_d_res <- cliffs_d(PHD_data$g1, PHD_data$X)
+#' summary(cliffs_d_res)
 #' }
 
 
 
-PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
+cliffs_d <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                 alternative="2-sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
@@ -51,19 +51,19 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
     ASE0  <- 0
   }
   conf <- qt(1-conf.level/2, N-1)
+  cliffs_d_val <- 1-2*PHD_val
   ci_rc <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
-  ci_cles <- c(PHD_val-ASE1*conf/sqrt(N), PHD_val+ASE1*conf/sqrt(N))
+  ci_cles <- c(cliffs_d_val-ASE1*conf/sqrt(N), cliffs_d_val+ASE1*conf/sqrt(N))
   t_val <- (PHD_val-0.5)/ASE0
   p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
-  PHD_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=PHD_val),
+  cliffs_d_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=cliffs_d_val),
                  significance=list("ASE1_rc"=ASE1*2, "ASE1_cles"=ASE1,
                                    "ASE0_rc"=ASE0*2, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
                                    "ci_cles"=ci_cles, "t_stat"=t_val,
                                    "p_value"=p_val),
-                 call = list("rank.cor" = "Somers' D", "cles" = "PHD",
-                             "conf.level"=conf.level, "error.type"=error.type,
-                             "alternative"=alternative, rc = "Somers' D",
-                             cles = "PHD"))
-  return(PHD_obj)
+                 call = list("rank.cor" = "Somers' D", "cles" = "Cliff's d",
+                              "conf.level" = conf.level, "error.type"=error.type,
+                              "alternative"=alternative))
+  return(cliffs_d_obj)
 }
 

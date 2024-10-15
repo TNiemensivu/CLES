@@ -1,7 +1,9 @@
-#' Function to calculate PHD effect size
+#' Function to calculate ordinal A and ordinal PS effect size.
+#' As ordinal A and ordinal PS are equal (see Metsämuuronen 2024), effect size
+#' calculated here will be called ordinal A even if it is also ordinal PS.
 #'
 #'
-#' @aliases PHD
+#' @aliases ordinal_A
 #' @param x either a table or a vector of a same length as y
 #'
 #' @param y if x is supplied as a vector, a vector same length as x
@@ -18,22 +20,26 @@
 #' @author Timi Niemensivu \email{timinie@@utu.fi}
 #' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
 #'
+#' @references
+#' Metsämuuronen, Jari. (2024). Two new common language estimators of effect size: Somers' delta and Goodman-Kruskal gamma as bases for nonparametric effect sizes. (Preprint) 10.13140/RG.2.2.14774.31045.
+#'
+#'
 #' @keywords common language effect sizes
-#' @export PHD
-#' @seealso \code{\link{PHG}} \code{\link{cliffs_d}} \code{\link{ordinal_A}}
+#' @export ordinal_A
+#' @seealso \code{\link{PHD}} \code{\link{PHG}} \code{\link{cliffs_d}}
 #' @examples
 #'
 #' \dontrun{
 #'
 #' data(PHD_data)
-#' PHD_res <- PHD(PHD_data$g1, PHD_data$X)
-#' summary(PHD)
+#' ordinal_A_res <- ordinal_A(PHD_data$g1, PHD_data$X)
+#' summary(ordinal_A_res)
 #' }
 
 
 
-PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
-                alternative="2-sided"){
+ordinal_A <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
+                     alternative="2-sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
   N <- sum(tab)
@@ -51,19 +57,18 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
     ASE0  <- 0
   }
   conf <- qt(1-conf.level/2, N-1)
+  ordinal_A_val <- 1-PHD_val
   ci_rc <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
-  ci_cles <- c(PHD_val-ASE1*conf/sqrt(N), PHD_val+ASE1*conf/sqrt(N))
+  ci_cles <- c(ordinal_A_val-ASE1*conf/sqrt(N), ordinal_A_val+ASE1*conf/sqrt(N))
   t_val <- (PHD_val-0.5)/ASE0
   p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
-  PHD_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=PHD_val),
-                 significance=list("ASE1_rc"=ASE1*2, "ASE1_cles"=ASE1,
-                                   "ASE0_rc"=ASE0*2, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
-                                   "ci_cles"=ci_cles, "t_stat"=t_val,
-                                   "p_value"=p_val),
-                 call = list("rank.cor" = "Somers' D", "cles" = "PHD",
-                             "conf.level"=conf.level, "error.type"=error.type,
-                             "alternative"=alternative, rc = "Somers' D",
-                             cles = "PHD"))
-  return(PHD_obj)
+  ordinal_A_obj <- new("cles", statistics=list("rank.cor"=D_val, "cles"=ordinal_A_val),
+                      significance=list("ASE1_rc"=ASE1*2, "ASE1_cles"=ASE1,
+                                        "ASE0_rc"=ASE0*2, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
+                                        "ci_cles"=ci_cles, "t_stat"=t_val,
+                                        "p_value"=p_val),
+                      call = list("rank.cor" = "Somers' D", "cles" = "ordinal A",
+                                  "conf.level" = conf.level, "error.type"=error.type,
+                                  "alternative"=alternative))
+  return(ordinal_A_obj)
 }
-
