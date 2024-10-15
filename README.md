@@ -1,4 +1,4 @@
-# CLEF - R package for Common Language EFfect sizes
+# CLES - R package for Common Language Effect Sizes
 
 R package for common language effect sizes
 
@@ -12,7 +12,7 @@ library(devtools)
 
 Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS"=TRUE)
 
-install_github("TNiemensivu/CLEF")
+install_github("TNiemensivu/CLES")
 
 ## License
 This package is free and open source software licensed under GPL3-license.

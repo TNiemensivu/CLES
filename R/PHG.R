@@ -22,9 +22,9 @@
 #'
 #' \dontrun{
 #'
-#' dat <- expand.table(g_data)
-#' PHG_res <- PHG(dat$g1, dat$X)
-#' summary(PHG)
+#' data(PHD_data)
+#' PHD_res <- PHD(PHD_data$g1, PHD_data$X)
+#' summary(PHD)
 #' }
 
 

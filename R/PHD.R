@@ -12,6 +12,9 @@
 #'
 #' @param conf.level confidence level used for confidence interval, default is 0.05
 #'
+#' @param alternative type of alternative hypothesis used for calculating p-value.
+#' Either "2-sided" (default) or "1-sided"
+#'
 #' @author Timi Niemensivu \email{timinie@@utu.fi}
 #' @author Jari Metsämuuronen \email{jari.metsamuuronen@@gmail.com}
 #'
@@ -22,15 +25,15 @@
 #'
 #' \dontrun{
 #'
-#' dat <- expand.table(g_data)
-#' PHD_res <- PHD(dat$g1, dat$X)
+#' data(PHD_data)
+#' PHD_res <- PHD(PHD_data$g1, PHD_data$X)
 #' summary(PHD)
 #' }
 
 
 
 PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
-                alternative="two.sided"){
+                alternative="2-sided"){
   if(!is.null(y)){tab <- table(x,y)}
   else{tab <- x}
   N <- sum(tab)
@@ -51,7 +54,7 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   ci_D <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
   ci_PHD <- c(PHD_val-ASE1*conf/sqrt(N), PHD_val+ASE1*conf/sqrt(N))
   t_val <- (PHD_val-0.5)/ASE0
-  p_val <- ifelse(alternative=="one.sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
+  p_val <- ifelse(alternative=="1-sided", 1-pnorm(t_val), 2*(1-pnorm(t_val)))
   PHD_obj <- new("PHD", statistics=list("D"=D_val, "PHD"=PHD_val),
                  significance=list("ASE1_D"=ASE1*2, "ASE1_PHD"=ASE1,
                                    "ASE0_D"=ASE0*2, "ASE0_PHD"=ASE0, "ci_D"=ci_D,

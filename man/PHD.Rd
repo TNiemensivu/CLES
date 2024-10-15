@@ -9,7 +9,7 @@ PHD(
   y = NULL,
   conf.level = 0.05,
   error.type = "normal",
-  alternative = "two.sided"
+  alternative = "2-sided"
 )
 }
 \arguments{
@@ -22,6 +22,9 @@ PHD(
 \item{error.type}{type of asymptotic standard error to be used in calculation
 of the p-value. Default is "normal" with other option being "uniform" for
 the uniform distribution based standard error and hypothesis testing}
+
+\item{alternative}{type of alternative hypothesis used for calculating p-value.
+Either "2-sided" (default) or "1-sided"}
 }
 \description{
 Function to calculate PHD effect size
@@ -30,8 +33,8 @@ Function to calculate PHD effect size
 
 \dontrun{
 
-dat <- expand.table(g_data)
-PHD_res <- PHD(dat$g1, dat$X)
+data(PHD_data)
+PHD_res <- PHD(PHD_data$g1, PHD_data$X)
 summary(PHD)
 }
 }
