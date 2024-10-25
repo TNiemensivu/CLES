@@ -42,13 +42,16 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   ASE1 <- 0.5*D_ASE1(tab)
   if(error.type == "normal"|error.type == "Normal"|error.type == "n"|error.type == "N"){
     ASE0 <- 0.5*D_ASE0(tab)
+    err.type <- "normal"
   }
   else if(error.type == "uniform"|error.type == "Uniform"|error.type == "u"|error.type == "U"){
     ASE0 <- 0.5*D_ASE0_unif(tab)
+    err.type <- "uniform"
   }
   else{
     warning("Nonexistent error type, standard error could not be calculated.")
     ASE0  <- 0
+    err.type <- "none"
   }
   conf <- qt(1-conf.level/2, N-1)
   ci_rc <- c(D_val-(2*ASE1/sqrt(N))*conf, D_val+(2*ASE1/sqrt(N))*conf)
@@ -61,7 +64,7 @@ PHD <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                                    "ci_cles"=ci_cles, "Z_stat"=Z_val,
                                    "p_value"=p_val),
                  call = list("rank.cor" = "Somers' D", "cles" = "PHD",
-                             "conf.level"=conf.level, "error.type"=error.type,
+                             "conf.level"=conf.level, "error.type"=err.type,
                              "alternative"=alternative, rc = "Somers' D",
                              cles = "PHD"))
   return(PHD_obj)

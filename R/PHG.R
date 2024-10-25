@@ -38,13 +38,16 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
   ASE1 <- 0.5*G_ASE1(tab)
   if(error.type == "normal"|error.type == "Normal"|error.type == "n"|error.type == "N"){
     ASE0 <- 0.5*G_ASE0(tab)
+    err.type <- "normal"
   }
   else if(error.type == "uniform"|error.type == "Uniform"|error.type == "u"|error.type == "U"){
     ASE0 <- 0.5*G_ASE0_unif(tab)
+    err.type <- "uniform"
   }
   else{
     warning("Nonexistent error type, standard error could not be calculated.")
-    ASE <- 0
+    ASE0  <- 0
+    err.type <- "none"
   }
   conf <- qt(1-conf.level/2, N-1)
   ci_rc <- c(G_val-2*ASE1*conf/sqrt(N), G_val+2*ASE1*conf/sqrt(N))
@@ -57,7 +60,7 @@ PHG <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                                    "ci_cles"=ci_cles, "Z_stat"=Z_val,
                                    "p_value"=p_val),
                  call = list("rank.cor" = "G-K G", "cles" = "PHG",
-                             "conf.level"=conf.level, "error.type"=error.type,
+                             "conf.level"=conf.level, "error.type"=err.type,
                              "alternative"=alternative))
   return(PHG_obj)
 }

@@ -40,13 +40,15 @@ setMethod(
     cles_confint <- paste(round(signif$ci_cles[1], digits=3)
                          , round(signif$ci_cles[2], digits=3), sep=" - ")
     ci_label <- paste("CI ", (1-call$conf.level)*100, "%", sep="")
-    cat(sprintf("%-12s %-6s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.", "ASE1",
+    cat(sprintf("%-12s %-6s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.",
+                ifelse(call$error.type== "normal", "ASE1", "ASE1*"),
                 "ASE0", ci_label, "Z-stat.", paste("p-value (",
                                                    call$alternative, ")", sep="")))
     cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", call$rank.cor, stats$rank.cor,
                 signif$ASE1_rc, signif$ASE0_rc, rc_confint, signif$Z_stat, signif$p_val))
     cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", call$cles, stats$cles,
                 signif$ASE1_cles, signif$ASE0_cles, cles_confint, signif$Z_stat, signif$p_val))
+    ifelse(call$error.type=="uniform", cat("* Based on normal approximation",), NULL)
     invisible(list(statistics = stats, significance = signif))
   }
 )
