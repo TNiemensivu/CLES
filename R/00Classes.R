@@ -46,7 +46,7 @@ setMethod(
     cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", call$rank.cor, stats$rank.cor,
                 signif$ASE1_rc, signif$ASE0_rc, rc_confint, signif$Z_stat, signif$p_val))
     cat(sprintf("%-12s %-6.3f %-6.3f %-6.3f %-14s %-7.3f %-7.3f \n", call$cles, stats$cles,
-                signif$ASE1_cles, signif$ASE0_cles, cles_confint, signif$t_stat, signif$p_val))
+                signif$ASE1_cles, signif$ASE0_cles, cles_confint, signif$Z_stat, signif$p_val))
     invisible(list(statistics = stats, significance = signif))
   }
 )

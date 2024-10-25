@@ -67,7 +67,7 @@ ordinal_A <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
                                         "ASE0_rc"=ASE0*2, "ASE0_cles"=ASE0, "ci_rc"=ci_rc,
                                         "ci_cles"=ci_cles, "Z_stat"=Z_val,
                                         "p_value"=p_val),
-                      call = list("rank.cor" = "Somers' D", "cles" = "ordinal A",
+                      call = list("rank.cor" = "Somers' D", "cles" = "ordinal A/PS",
                                   "conf.level" = conf.level, "error.type"=error.type,
                                   "alternative"=alternative))
   return(ordinal_A_obj)
