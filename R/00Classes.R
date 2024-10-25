@@ -39,7 +39,9 @@ setMethod(
                        , round(signif$ci_rc[2], digits=3), sep=" - ")
     cles_confint <- paste(round(signif$ci_cles[1], digits=3)
                          , round(signif$ci_cles[2], digits=3), sep=" - ")
-    ci_label <- paste("CI ", (1-call$conf.level)*100, "%", sep="")
+    ci_label <- ifelse(call$error.type== "normal",
+                       paste("CI ", (1-call$conf.level)*100, "%", sep=""),
+                       paste("CI ", (1-call$conf.level)*100, "%*", sep=""))
     cat(sprintf("%-12s %-6s %-6s %-6s %-14s %-7s %-7s \n", " ", "Stat.",
                 ifelse(call$error.type== "normal", "ASE1", "ASE1*"),
                 "ASE0", ci_label, "Z-stat.", paste("p-value (",
