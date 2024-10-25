@@ -73,8 +73,11 @@ summarise_cles <- function(x, y=NULL, conf.level = 0.05, error.type = "normal",
               paste(round(ordinal_A_val@significance$ci_cles[1], digits=3),
                     round(ordinal_A_val@significance$ci_cles[2], digits=3), sep=" - ")))
 
-  cat("\n Z-statistic: ", PHD_val@significance$Z_stat, ", p-value(",
-      PHD_val@call$alternative, "): ", PHD_val@significance$p_value, sep="")
+  cat("\n Z-statistic of PHD: ", round(PHD_val@significance$Z_stat, 3), ", p-value(",
+      PHD_val@call$alternative, "): ", round(PHD_val@significance$p_value, 3), sep="")
+
+  cat("\n Z-statistic of PHG: ", round(PHG_val@significance$Z_stat, 3), ", p-value(",
+      PHD_val@call$alternative, "): ", round(PHG_val@significance$p_value, 3), sep="")
 }
 
 
